@@ -44,6 +44,10 @@
       background-color: #fc7800;
       color: white;
     }
+
+    #race_feed .post {
+      margin-bottom: 25px;
+    }
   </style>
   <div id="race_feed"></div>
   <script type="text/javascript">
