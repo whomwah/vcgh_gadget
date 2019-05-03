@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="VCGH Race Feed" height="100">
+    <Require feature="dynamic-height"/>
+  </ModulePrefs>
+  <Content type="html">
+  <![CDATA[
+  <style>
+    #race_feed h3 {
+      padding: 0;
+      margin: 0;
+      color: lightgrey;
+      font-weight: 400;
+    }
+
+    #race_feed table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #race_feed td, #race_feed th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #race_feed tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #race_feed tr:hover {
+      background-color: #ddd;
+    }
+
+    #race_feed th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #fc7800;
+      color: white;
+    }
+  </style>
+  <div id="race_feed"></div>
+  <script type="text/javascript">
+  // Get userprefs
+  function getFeed() {
+    var params = {};
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.FEED;
+    params[gadgets.io.RequestParameters.NUM_ENTRIES] = new Number(100);
+    params[gadgets.io.RequestParameters.GET_SUMMARIES] = true;
+    var url = "https://vcghblog.syscoextranet.com/?feed=rss2&cat=25";
+    gadgets.io.makeRequest(url, response, params);
+  };
+
+  function response(obj) {
+    // obj.data contains the feed data
+    var feed = obj.data;
+    var html = '';
+
+    // Access the data for a given entry
+    if (feed.Entry) {
+      for (var i = 0; i < feed.Entry.length; i++) {
+        html += '<div class="post">';
+        html += '<h3>' + feed.Entry[i].Title + '</h3>';
+        var milliseconds = (feed.Entry[i].Date) * 1000;
+        var date = new Date(milliseconds);
+        html += '<h4>';
+        html += date.toLocaleDateString();
+        html += ' ';
+        html += date.toLocaleTimeString();
+        html += '</h4>';
+        html += '<div class="summary">' + feed.Entry[i].Summary + '</div>';
+        html += '</div>';
+      }
+    }
+    document.getElementById('race_feed').innerHTML = html;
+    gadgets.window.adjustHeight();
+  };
+  gadgets.util.registerOnLoadHandler(getFeed);
+  </script>
+  ]]>
+  </Content>
+</Module>
