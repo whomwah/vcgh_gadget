@@ -57,7 +57,7 @@
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.FEED;
     params[gadgets.io.RequestParameters.NUM_ENTRIES] = new Number(100);
     params[gadgets.io.RequestParameters.GET_SUMMARIES] = true;
-    var url = "https://vcghblog.syscoextranet.com/?feed=rss2&cat=25";
+    var url = "http://blog.vcgh.co.uk/?feed=rss2&cat=25";
     gadgets.io.makeRequest(url, response, params);
   };
 
